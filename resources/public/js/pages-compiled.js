@@ -578,8 +578,8 @@ require('./editPageCategory.component');
             }
 
             return {
-                title : '',
-                description : '',
+                title : Lang.langFields(),
+                description : Lang.langFields(),
                 slug : '',
                 children : [],
                 settings : settings,
