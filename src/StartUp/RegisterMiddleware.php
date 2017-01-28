@@ -22,6 +22,6 @@ class RegisterMiddleware
      */
     public function handle(ServiceProvider $serviceProvider, Router $router)
     {
-        $router->middleware('publishPage', PublishPage::class);
+        $router->aliasMiddleware('publishPage', PublishPage::class);
     }
 }
