@@ -56,7 +56,7 @@
 
         function addCategory(parentId) {
             var newCat = newCategory();
-            if (parentId || parentId != 0) {
+            if (parentId && parseInt(parentId) !== 0) {
                 newCat.parent_id = parentId;
                 return find(parentId)
                     .then(function (parent) {
@@ -65,7 +65,7 @@
                     });
             }
 
-            return $q.resolve(newCat)
+            return $q.resolve(newCat);
         }
 
         /**

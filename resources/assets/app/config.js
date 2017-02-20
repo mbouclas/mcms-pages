@@ -3,11 +3,14 @@
     var assetsUrl = '/assets/',
         appUrl = '/app/',
         componentsUrl = appUrl + 'Components/',
-        templatesDir = '/package-pages/app/templates/';
+        templatesDir = '/package-pages/app/templates/',
+        itemModelName = 'Mcms\\\\Pages\\\\Models\\\\Page',
+        categoryModelName = 'Mcms\\\\Pages\\\\Models\\\\PageCategory';
 
     var config = {
-        pageModel : 'Mcms\\\\Pages\\\\Models\\\\Page',
-        pageCategoryModel : 'Mcms\\\\Pages\\\\Models\\\\PageCategory',
+        itemModelName : itemModelName,
+        pageModel : itemModelName,
+        pageCategoryModel : categoryModelName,
         apiUrl : '/api/',
         prefixUrl : '/admin',
         previewUrl : '/admin/api/page/preview/',

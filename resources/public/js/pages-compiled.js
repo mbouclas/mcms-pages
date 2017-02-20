@@ -553,7 +553,7 @@ require('./editPageCategory.component');
 
         function addCategory(parentId) {
             var newCat = newCategory();
-            if (parentId || parentId != 0) {
+            if (parentId && parseInt(parentId) !== 0) {
                 newCat.parent_id = parentId;
                 return find(parentId)
                     .then(function (parent) {
@@ -562,7 +562,7 @@ require('./editPageCategory.component');
                     });
             }
 
-            return $q.resolve(newCat)
+            return $q.resolve(newCat);
         }
 
         /**
@@ -1758,11 +1758,14 @@ require('./Widgets/latestPages.widget');
     var assetsUrl = '/assets/',
         appUrl = '/app/',
         componentsUrl = appUrl + 'Components/',
-        templatesDir = '/package-pages/app/templates/';
+        templatesDir = '/package-pages/app/templates/',
+        itemModelName = 'Mcms\\\\Pages\\\\Models\\\\Page',
+        categoryModelName = 'Mcms\\\\Pages\\\\Models\\\\PageCategory';
 
     var config = {
-        pageModel : 'Mcms\\\\Pages\\\\Models\\\\Page',
-        pageCategoryModel : 'Mcms\\\\Pages\\\\Models\\\\PageCategory',
+        itemModelName : itemModelName,
+        pageModel : itemModelName,
+        pageCategoryModel : categoryModelName,
         apiUrl : '/api/',
         prefixUrl : '/admin',
         previewUrl : '/admin/api/page/preview/',
@@ -1814,9 +1817,10 @@ require('./Widgets/latestPages.widget');
 
         .run(run);
 
-    run.$inject = ['mcms.menuService'];
+    run.$inject = ['mcms.menuService', 'DynamicTableService', 'PAGES_CONFIG'];
 
-    function run(Menu) {
+    function run(Menu, DynamicTableService, Config) {
+        DynamicTableService.mapModel('pages', Config.itemModelName);
 
         Menu.addMenu(Menu.newItem({
             id: 'pages',
@@ -1834,6 +1838,14 @@ require('./Widgets/latestPages.widget');
 
         pagesMenu.addChildren([
             Menu.newItem({
+                id: 'pagesCategories-manager',
+                title: 'Categories',
+                permalink: '/pages/categories',
+                gate : 'cms.categories.menu',
+                icon: 'view_list',
+                order : 1
+            }),
+            Menu.newItem({
                 id: 'pages-manager',
                 title: 'Pages',
                 permalink: '/pages/content',
@@ -1847,17 +1859,13 @@ require('./Widgets/latestPages.widget');
                 gate : 'cms.extraFields.menu',
                 icon: 'note_add',
                 order : 3
-            })
-        ]);
-
-        pagesMenu.addChildren([
+            }),
             Menu.newItem({
-                id: 'pagesCategories-manager',
-                title: 'Categories',
-                permalink: '/pages/categories',
-                gate : 'cms.categories.menu',
-                icon: 'view_list',
-                order : 1
+                id: 'dynamic-tables',
+                title: 'Dynamic Tables',
+                permalink: '/dynamicTables/pages',
+                icon: 'assignment',
+                order : 4
             })
         ]);
     }

@@ -84,6 +84,7 @@ class Page extends Model
      */
     public $imageConfigurator = \Mcms\Pages\Services\Page\ImageConfigurator::class;
     public $fileConfigurator = \Mcms\Pages\Services\Page\FileConfigurator::class;
+    public $dynamicTablesModel = DynamicTable::class;
 
     protected $slugPattern = 'pages.items.slug_pattern';
     protected $featuredModel;
@@ -102,6 +103,7 @@ class Page extends Model
         $this->slugPattern = Config::get($this->slugPattern);
         $this->featuredModel = (Config::has('pages.featured')) ? Config::get('pages.featured') : Featured::class;
         $this->relatedModel = (Config::has('pages.related')) ? Config::get('pages.related') : Related::class;
+        $this->dynamicTablesModel = (Config::has('pages.dynamicTablesModel')) ? Config::get('pages.dynamicTablesModel') : $this->dynamicTablesModel;
         $this->extraFieldModel = ExtraField::class;
         if (Config::has('pages.items.images.imageConfigurator')){
             $this->imageConfigurator = Config::get('pages.items.images.imageConfigurator');

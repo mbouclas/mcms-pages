@@ -13,9 +13,10 @@
 
         .run(run);
 
-    run.$inject = ['mcms.menuService'];
+    run.$inject = ['mcms.menuService', 'DynamicTableService', 'PAGES_CONFIG'];
 
-    function run(Menu) {
+    function run(Menu, DynamicTableService, Config) {
+        DynamicTableService.mapModel('pages', Config.itemModelName);
 
         Menu.addMenu(Menu.newItem({
             id: 'pages',
@@ -33,6 +34,14 @@
 
         pagesMenu.addChildren([
             Menu.newItem({
+                id: 'pagesCategories-manager',
+                title: 'Categories',
+                permalink: '/pages/categories',
+                gate : 'cms.categories.menu',
+                icon: 'view_list',
+                order : 1
+            }),
+            Menu.newItem({
                 id: 'pages-manager',
                 title: 'Pages',
                 permalink: '/pages/content',
@@ -46,17 +55,13 @@
                 gate : 'cms.extraFields.menu',
                 icon: 'note_add',
                 order : 3
-            })
-        ]);
-
-        pagesMenu.addChildren([
+            }),
             Menu.newItem({
-                id: 'pagesCategories-manager',
-                title: 'Categories',
-                permalink: '/pages/categories',
-                gate : 'cms.categories.menu',
-                icon: 'view_list',
-                order : 1
+                id: 'dynamic-tables',
+                title: 'Dynamic Tables',
+                permalink: '/dynamicTables/pages',
+                icon: 'assignment',
+                order : 4
             })
         ]);
     }
