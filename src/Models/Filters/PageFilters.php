@@ -11,11 +11,12 @@ use Mcms\Core\QueryFilters\FilterableExtraFields;
 use Mcms\Core\QueryFilters\FilterableLimit;
 use Mcms\Core\QueryFilters\FilterableOrderBy;
 use Mcms\Core\QueryFilters\QueryFilters;
+use Mcms\Core\QueryFilters\FilterableTagged;
 
 
 class PageFilters extends QueryFilters
 {
-    use FilterableDate, FilterableOrderBy, FilterableLimit, FilterableExtraFields;
+    use FilterableDate, FilterableOrderBy, FilterableLimit, FilterableExtraFields, FilterableTagged;
 
     /**
      * @var array
@@ -34,6 +35,7 @@ class PageFilters extends QueryFilters
         'orderBy',
         'extraFields',
         'q',
+        'tag'
     ];
 
     /**
