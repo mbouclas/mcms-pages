@@ -155,7 +155,7 @@
         vm.mediaFilesOptions = {imageTypes : [], withMediaLibrary : true};
         vm.UploadConfig = {
             file : {},
-            image : vm.imagesUploadOptions
+            image : vm.imagesUploadOptions,
         };
 
         vm.FileUploadConfig = {
@@ -295,6 +295,7 @@
             vm.imagesUploadOptions.params.item_id = item.id;
             vm.imagesUploadOptions.params.model = Model;
             vm.imagesUploadOptions.params.type = 'images';
+            vm.imagesUploadOptions.params.resize = true;
             vm.FileUploadConfig.params.item_id = item.id;
             vm.FileUploadConfig.params.model = Model;
             vm.FileUploadConfig.params.type = 'file';
