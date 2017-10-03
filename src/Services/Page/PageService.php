@@ -96,7 +96,10 @@ class PageService
         $Page = $this->saveRelated($page, $Page);
 
         $Page = $this->fixTags($page, $Page);
-        $Page->extraFieldValues()->sync($Page->sortOutExtraFields($page['extra_fields']));
+        if (isset($page['extra_fields'])){
+            $Page->extraFieldValues()->sync($Page->sortOutExtraFields($page['extra_fields']));
+        }
+
         //emit an event so that some other bit of the app might catch it
         Event::fire('menu.item.sync',$Page);
         Event::fire('page.updated',$Page);
