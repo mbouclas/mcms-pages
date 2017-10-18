@@ -97,6 +97,11 @@ class PageController extends Controller
             // $query->time
         });
         $limit = ($request->has('limit')) ? (int)$request->input('limit') : 10;
+
+        if (! $request->has('orderBy')) {
+            $request->merge(['orderBy' => 'created_at']);
+        }
+
         return $this->pageService->model->with(['categories', 'images'])
             ->filter($filters)
             ->paginate($limit);
