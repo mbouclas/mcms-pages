@@ -54,7 +54,11 @@
             <md-button class="md-button md-primary md-raised" ng-if="VM.Item.id" ng-init="VM.setUser=false"
                        ng-click="VM.setUser=!VM.setUser">Change page author</md-button>
 
-            <div ng-show="VM.setUser"><user-selector ng-model="VM.Item.user_id" show-current-user="true"></user-selector></div>
+            <div ng-show="VM.setUser"><user-selector
+                    ng-model="VM.Item.user_id"
+                    show-current-user="true"
+                    options="VM.userSelectorOptions"
+            ></user-selector></div>
 
             <div ng-if="VM.disableStatus">To be published on {{ VM.toBePublished | moment }}</div>
             <md-button class="md-button md-primary md-raised" ng-if="VM.Item.id" ng-init="VM.future=false"

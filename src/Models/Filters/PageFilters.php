@@ -65,11 +65,15 @@ class PageFilters extends QueryFilters
      */
     public function active($active = null)
     {
-        if ( ! isset($active)){
+        if (is_string($active)) {
+            $active = ($active == 'true') ? 1 : false;
+        }
+
+        if ( is_null($active)){
             return $this->builder;
         }
 
-        //In case ?status=active,inactive
+        //In case ?active=active,inactive
         if (! is_array($active)) {
             $active = $active = explode(',',$active);
         }

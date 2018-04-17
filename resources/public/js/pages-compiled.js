@@ -1010,7 +1010,7 @@ require('./editPageCategory.component');
         vm.Permissions = ACL.permissions();
         vm.isSu = ACL.role('su');//more efficient check
         vm.isAdmin = ACL.role('admin');//more efficient check
-
+        vm.userSelectorOptions = {gate:'cms.items.add'};
 
         vm.tabs = [
             {
