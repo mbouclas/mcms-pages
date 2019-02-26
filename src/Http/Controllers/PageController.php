@@ -22,6 +22,9 @@ class PageController extends Controller
     public function __construct(PageService $pageService)
     {
         $this->pageService = $pageService;
+/*        $this->middleware('gate:cms.items.view',  ['only' => ['index', 'show', 'preview']]);
+        $this->middleware('gate:cms.items.add',  ['only' => ['store', 'create', 'new']]);
+        $this->middleware('gate:cms.items.delete',  ['only' => ['destroy']]);*/
     }
 
     public function index(PageFilters $filters, Request $request)
@@ -103,6 +106,7 @@ class PageController extends Controller
         }
 
         return $this->pageService->model->with(['categories', 'images'])
+            ->owner()
             ->filter($filters)
             ->paginate($limit);
     }
@@ -129,6 +133,7 @@ class PageController extends Controller
 
     public function show($id, ExtraFieldFilters $filters)
     {
+
         $imageCategories = Config::get('pages.items.images.types');
         $extraFieldService = new ExtraFields();
         \DB::listen(function ($query) {
@@ -137,10 +142,14 @@ class PageController extends Controller
             // $query->time
         });
         $filters->request->merge(['model' => str_replace('\\', '\\\\', get_class($this->pageService->model))]);
+        $item = $this->pageService->findOne($id, ['related', 'categories',
+            'galleries', 'tagged', 'files', 'extraFields', 'extraFields.field']);
+/*        if (! $item) {
+            return null;
+        }*/
 
         return [
-            'item' => $this->pageService->findOne($id, ['related', 'categories',
-                'galleries', 'tagged', 'files', 'extraFields', 'extraFields.field']),
+            'item' => $item,
             'imageCategories' => $imageCategories,
             'extraFields' => $extraFieldService->model->filter($filters)->get(),
             'imageCopies' => Config::get('pages.items.images'),

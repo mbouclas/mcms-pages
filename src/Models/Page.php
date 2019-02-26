@@ -166,7 +166,9 @@ class Page extends Model
      */
     public function thumb()
     {
-        return $this->hasOne(Image::class, 'item_id')->where('type', 'thumb');
+        return $this->hasOne(Image::class, 'item_id')
+            ->where('model', __CLASS__)
+            ->where('type', 'thumb');
     }
 
     /**
@@ -177,6 +179,7 @@ class Page extends Model
     public function images()
     {
         return $this->hasMany(Image::class, 'item_id')
+            ->where('model', __CLASS__)
             ->where('type', 'images')
             ->orderBy('orderBy','ASC');
     }
@@ -201,6 +204,7 @@ class Page extends Model
     public function galleries()
     {
         return $this->hasMany(Image::class, 'item_id')
+            ->where('model', __CLASS__)
             ->where('type', '!=', 'thumb');
     }
 

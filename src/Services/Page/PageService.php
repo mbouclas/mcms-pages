@@ -161,6 +161,7 @@ class PageService
 
         $item = $this->model
             ->with($with)
+            ->owner()
             ->find($id);
 
         if ($item){
