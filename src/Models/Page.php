@@ -187,6 +187,7 @@ class Page extends Model
     public function files()
     {
         return $this->hasMany(FileGallery::class, 'item_id')
+            ->where('model', __CLASS__)
             ->orderBy('orderBy','ASC');
     }
 

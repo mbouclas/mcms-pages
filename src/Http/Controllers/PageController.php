@@ -106,7 +106,6 @@ class PageController extends Controller
         }
 
         return $this->pageService->model->with(['categories', 'images'])
-            ->owner()
             ->filter($filters)
             ->paginate($limit);
     }
@@ -148,8 +147,9 @@ class PageController extends Controller
             return null;
         }*/
 
+
         return [
-            'item' => $item,
+            'item' => array_merge($item->toArray(), $item->categories->toArray()),
             'imageCategories' => $imageCategories,
             'extraFields' => $extraFieldService->model->filter($filters)->get(),
             'imageCopies' => Config::get('pages.items.images'),

@@ -56,6 +56,7 @@
     function DirectiveController($scope, Page, Helpers, Config, ACL, Lang, PageCategory, PagesConfig,
                                  ItemSelector, lo, SM, SEO, LMS, $timeout, $rootScope, $q,
                                  moment, ModuleExtender, MLS, ExtraFieldService) {
+
         var vm = this,
             autoSaveHooks = [],
             Model = '\\Mcms\\Pages\\Models\\Page';
@@ -195,7 +196,6 @@
             }
 
             if (!$scope.ItemForm.$valid){
-                console.log('here');
 
                 Helpers.toast($scope.ItemForm.$error.required.length + ' Errors found, please fill all required fields', null, 5000, 'error');
                 vm.errorsFound = true;
@@ -243,6 +243,9 @@
         };
 
         vm.onCategorySelected = function (cat) {
+            if (typeof vm.Item.categories == 'undefined') {
+                vm.Item.categories = [];
+            }
 
             if (!cat || typeof cat.id == 'undefined'){
                 return;
