@@ -141,15 +141,16 @@ class PageController extends Controller
             // $query->time
         });
         $filters->request->merge(['model' => str_replace('\\', '\\\\', get_class($this->pageService->model))]);
-        $item = $this->pageService->findOne($id, ['related', 'categories',
-            'galleries', 'tagged', 'files', 'extraFields', 'extraFields.field']);
+        $dynamicTableService = new DynamicTablesService(new $this->pageService->model->dynamicTablesModel);
+
 /*        if (! $item) {
             return null;
         }*/
 
 
         return [
-            'item' => array_merge($item->toArray(), $item->categories->toArray()),
+            'item' => $this->pageService->findOne($id, ['related', 'categories', 'dynamicTables',
+                'galleries','tagged','files', 'extraFields', 'extraFields.field', 'addons']),
             'imageCategories' => $imageCategories,
             'extraFields' => $extraFieldService->model->filter($filters)->get(),
             'imageCopies' => Config::get('pages.items.images'),
@@ -157,6 +158,7 @@ class PageController extends Controller
             'tags' => $this->pageService->model->existingTags(),
             'settings' => SettingsManagerService::get('pages'),
             'connectors' => ItemConnector::connectors(),
+            'dynamicTables' => $dynamicTableService->all(),
             'seoFields' => Config::get('seo')
         ];
     }
