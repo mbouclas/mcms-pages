@@ -101,8 +101,8 @@ class PageService
         }
 
         //emit an event so that some other bit of the app might catch it
-        Event::fire('menu.item.sync',$Page);
-        Event::fire('page.updated',$Page);
+        event('menu.item.sync',$Page);
+        event('page.updated',$Page);
 
         return $Page;
     }
@@ -128,7 +128,7 @@ class PageService
         $Page->categories()->attach($this->sortOutCategories($page['categories']));
         $Page = $this->saveRelated($page, $Page);
         $Page = $this->fixTags($page, $Page);
-        Event::fire('page.created',$Page);
+        event('page.created',$Page);
         return $Page;
     }
 
@@ -150,8 +150,8 @@ class PageService
         //delete from related
         Related::where('model',get_class($this->model))->where('source_item_id', $id)->orWhere('item_id', $id)->delete();
         //emit an event so that some other bit of the app might catch it
-        Event::fire('menu.item.destroy',$item);
-        Event::fire('page.destroyed',$item);
+        event('menu.item.destroy',$item);
+        event('page.destroyed',$item);
 
         return $item->delete();
     }
