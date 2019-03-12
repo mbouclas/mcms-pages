@@ -237,6 +237,16 @@ class Page extends Model
             ->where('model', get_class($this));
     }
 
+    public function dynamicTables()
+    {
+        return $this->belongsToMany(DynamicTable::class,
+            'dynamic_tables_items',
+            'item_id',
+            'dynamic_table_id')
+            ->where('dynamic_tables_items.model', get_class($this))
+            ->withTimestamps();
+    }
+
     public function newCollection(array $models = []){
         return new PagesCollection($models);
     }

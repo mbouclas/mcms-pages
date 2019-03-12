@@ -9,7 +9,7 @@ use Mcms\Core\Models\Filters\ExtraFieldFilters;
 use Mcms\Core\Services\SettingsManager\SettingsManagerService;
 use Mcms\Pages\Models\Filters\PageFilters;
 use Mcms\Pages\Models\Page;
-use Mcms\Pages\Models\PageCategory;
+use Mcms\Core\Services\DynamicTables\DynamicTablesService;
 use Mcms\Pages\Services\Page\PageService;
 use Illuminate\Http\Request;
 use ItemConnector;
@@ -150,7 +150,7 @@ class PageController extends Controller
 
         return [
             'item' => $this->pageService->findOne($id, ['related', 'categories', 'dynamicTables',
-                'galleries','tagged','files', 'extraFields', 'extraFields.field', 'addons']),
+                'galleries','tagged','files', 'extraFields', 'extraFields.field']),
             'imageCategories' => $imageCategories,
             'extraFields' => $extraFieldService->model->filter($filters)->get(),
             'imageCopies' => Config::get('pages.items.images'),
