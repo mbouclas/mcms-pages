@@ -18,6 +18,7 @@ use Mcms\Pages\Exceptions\InvalidPageFormatException;
 use Mcms\Pages\Models\Featured;
 use Mcms\Pages\Models\Page;
 use Mcms\Pages\Models\Related;
+use Str;
 
 /**
  * Class PageService
@@ -194,7 +195,7 @@ class PageService
 
     private function setSlug($item){
         if ( ! isset($item['slug']) || ! $item['slug']){
-            return str_slug($item['title'][App::getLocale()]);
+            return Str::slug($item['title'][App::getLocale()]);
         }
 
         return $item['slug'];
