@@ -157,26 +157,34 @@ class PageService
         return $item->delete();
     }
 
-    public function findOne($id, array $with = [])
+    public function findOne($id, array $with = [], array $options = [
+        'where' => []
+    ])
     {
 
         $item = $this->model
-            ->with($with)
+            ->with($with);
 
-            ->find($id);
+        if (count($options['where']) > 0) {
+            foreach ($options['where'] as $key => $value) {
+                $item = $item->where($key, $value);
+            }
+        }
+
+        $item = $item->find($id);
 
         if ($item){
             $item = $item->relatedItems();
+            $item->related = collect($item->related);
         }
 
-        if (isset($item->galleries)){
+        if (in_array('galleries', $with)){
             $item->images = $this->imageGrouping
                 ->group($item->galleries, \Config::get('pages.items.images.types'));
         }
 
         return $item;
     }
-
     /**
      * create an array of category ids with the extra value main
      *
