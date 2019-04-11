@@ -176,15 +176,17 @@ class PageService
         if ($item){
             $item = $item->relatedItems();
             $item->related = collect($item->related);
+
+            if (in_array('galleries', $with)){
+                $item->images = $this->imageGrouping->group($item->galleries, \Config::get('pages.items.images.types'));
+            }
         }
 
-        if (in_array('galleries', $with)){
-            $item->images = $this->imageGrouping
-                ->group($item->galleries, \Config::get('pages.items.images.types'));
-        }
+
 
         return $item;
     }
+
     /**
      * create an array of category ids with the extra value main
      *
