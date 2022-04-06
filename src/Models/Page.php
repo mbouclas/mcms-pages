@@ -3,7 +3,7 @@
 namespace Mcms\Pages\Models;
 use Carbon\Carbon;
 use Config;
-use Conner\Likeable\LikeableTrait;
+use Conner\Likeable\Likeable;
 use Conner\Tagging\Taggable;
 use Mcms\Core\Traits\ExtraFields;
 use Mcms\Core\Models\FileGallery;
@@ -25,7 +25,7 @@ use Themsaid\Multilingual\Translatable;
 class Page extends Model
 {
     use Translatable, Filterable, Presentable, Taggable,
-        Relateable, Sluggable, CustomImageSize, Userable, ExtraFields, LikeableTrait;
+        Relateable, Sluggable, CustomImageSize, Userable, ExtraFields, Likeable;
 
     /**
      * @var string
@@ -58,7 +58,7 @@ class Page extends Model
      * @var array
      */
     protected $dates = ['created_at', 'updated_at', 'published_at'];
-    
+
     /**
      * @var array
      */
