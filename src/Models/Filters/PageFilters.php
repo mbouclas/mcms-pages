@@ -51,10 +51,10 @@ class PageFilters extends QueryFilters
 
 
         if (! is_array($id)) {
-            $id = $id = explode(',',$id);
+            return $this->builder->where("id", 'LIKE', "%{$id}%");;
         }
 
-        return $this->builder->whereIn('id', $id);
+        return $this->builder->whereIn('id',  $id);
     }
 
 
